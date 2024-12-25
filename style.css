@@ -27,6 +27,7 @@ body {
   align-items: center;
   margin: 0 10px;
   cursor: grab; /* Show a “grab” cursor on hover */
+  touch-action: none; /* Disables browser’s default touch behavior on this element */
 }
 
 /* When pointerdown, you can show a “grabbing” cursor */
