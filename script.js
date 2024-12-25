@@ -7,7 +7,7 @@ const rightValueEl = document.getElementById('rightValue');
 let currentFahrenheit = parseFloat(leftValueEl.textContent);
 
 // Pointers for tracking
-let startY = 0;
+let startX = 0;
 let startFahrenheit = 0;
 
 // Ratio of pixels dragged to degrees Fahrenheit
@@ -16,7 +16,7 @@ const PIXELS_PER_DEGREE = 10;
 
 leftContainer.addEventListener('pointerdown', (event) => {
   event.preventDefault(); // Prevent default to stop browser scrolling
-  startY = event.clientY;
+  startX = event.clientX;
   startFahrenheit = currentFahrenheit;
 
   // Capture pointer so we continue to get events
@@ -29,10 +29,10 @@ leftContainer.addEventListener('pointermove', (event) => {
     return;
   }
   
-  const deltaY = event.clientY - startY;
+  const deltaX = event.clientX - startX;
 
   // Move in the opposite direction: drag up -> decrease Fahrenheit
-  currentFahrenheit = startFahrenheit - (deltaY / PIXELS_PER_DEGREE);
+  currentFahrenheit = startFahrenheit - (deltaX / PIXELS_PER_DEGREE);
   currentFahrenheit = Math.round(currentFahrenheit * 2) / 2;
 
   // Update left UI
