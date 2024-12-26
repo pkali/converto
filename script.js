@@ -1,56 +1,72 @@
-// Grab elements
-const leftContainer = document.getElementById('leftContainer');
-const leftValueEl = document.getElementById('leftValue');
-const rightValueEl = document.getElementById('rightValue');
-
-// We'll store the current Fahrenheit value and use that internally
-let currentFahrenheit = parseFloat(leftValueEl.textContent);
-
-// Pointers for tracking
-let startX = 0;
-let startFahrenheit = 0;
-
-// Ratio of pixels dragged to degrees Fahrenheit
-// Adjust this so it feels natural
-const PIXELS_PER_DEGREE = 10;
-
-leftContainer.addEventListener('pointerdown', (event) => {
-  event.preventDefault(); // Prevent default to stop browser scrolling
-  startX = event.clientX;
-  startFahrenheit = currentFahrenheit;
-
-  // Capture pointer so we continue to get events
-  leftContainer.setPointerCapture(event.pointerId);
-});
-
-leftContainer.addEventListener('pointermove', (event) => {
-  if (event.pressure === 0) {
-    // Means pointer isn’t pressed down
-    return;
-  }
+/**
+ * Creates a horizontal drag-based converter.
+ * @param {Object} opts
+ *   containerId  : string (the ID of the .converter div)
+ *   leftValueId  : string (the ID of the left <span>)
+ *   rightValueId : string (the ID of the right <span>)
+ *   initialLeftValue : number (the initial numeric value)
+ *   pxPerUnit : number (how many pixels per 1 unit of leftValue)
+ *   convertFn : function (converts leftValue to rightValue)
+ */
+function setupConverter(opts) {
+    const container = document.getElementById(opts.containerId);
+    const leftEl    = document.getElementById(opts.leftValueId);
+    const rightEl   = document.getElementById(opts.rightValueId);
   
-  const deltaX = event.clientX - startX;
+    let currentLeftValue = opts.initialLeftValue;
+    let startX = 0;
+    let startLeftValue = currentLeftValue;
+  
+    // Initialize display
+    leftEl.textContent = currentLeftValue.toFixed(1);
+    rightEl.textContent = opts.convertFn(currentLeftValue).toFixed(1);
+  
+    container.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      startX = event.clientX;
+      startLeftValue = currentLeftValue;
+      container.setPointerCapture(event.pointerId);
+    });
+  
+    container.addEventListener('pointermove', (event) => {
+      if (event.pressure === 0) return;
+      event.preventDefault();
+      const deltaX = event.clientX - startX;
+  
+      currentLeftValue = startLeftValue + (deltaX / opts.pxPerUnit);
+      leftEl.textContent = currentLeftValue.toFixed(1);
+      rightEl.textContent = opts.convertFn(currentLeftValue).toFixed(1);
+    });
+  
+    container.addEventListener('pointerup', (event) => {
+      container.releasePointerCapture(event.pointerId);
+  
+      // Rounding logic: e.g., round to nearest whole number
+      currentLeftValue = Math.round(currentLeftValue);
+      leftEl.textContent = currentLeftValue.toFixed(1);
+  
+      // Re-calc right value (km, in this example)
+      const rightValue = opts.convertFn(currentLeftValue);
+      rightEl.textContent = rightValue.toFixed(1);
+    });
+  }
 
-  // Move in the opposite direction: drag up -> decrease Fahrenheit
-  currentFahrenheit = startFahrenheit - (deltaX / PIXELS_PER_DEGREE);
-  currentFahrenheit = Math.round(currentFahrenheit * 2) / 2;
-
-  // Update left UI
-  leftValueEl.textContent = currentFahrenheit.toFixed(1);
-
-  // Convert to Celsius and update right UI
-  const celsiusValue = fahrenheitToCelsius(currentFahrenheit);
-  rightValueEl.textContent = celsiusValue.toFixed(1);
-});
-
-leftContainer.addEventListener('pointerup', (event) => {
-  // Possibly snap to nearest .5 or whole number if you like:
-  // currentFahrenheit = Math.round(currentFahrenheit * 2) / 2;
-
-  leftContainer.releasePointerCapture(event.pointerId);
-});
-
-// Conversion function
-function fahrenheitToCelsius(f) {
-  return (f - 32) * 5 / 9;
-}
+  // Fahrenheit → Celsius
+setupConverter({
+    containerId: 'tempConverter',
+    leftValueId: 'tempLeftValue',
+    rightValueId: 'tempRightValue',
+    initialLeftValue: 72,
+    pxPerUnit: 10,
+    convertFn: (f) => (f - 32) * 5/9
+  });
+  
+  // Miles → Km
+  setupConverter({
+    containerId: 'distConverter',
+    leftValueId: 'distLeftValue',
+    rightValueId: 'distRightValue',
+    initialLeftValue: 10,
+    pxPerUnit: 5,
+    convertFn: (mi) => mi * 1.60934
+  });

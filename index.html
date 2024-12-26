@@ -8,21 +8,31 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <div class="converter">
-    <div class="unit left" id="leftContainer">
-      <span class="value" id="leftValue">72.0</span>
-      <span class="label">°F</span>
+    <div class="parent">
+    <div class="converter" id="tempConverter">
+        <div class="unit left">
+          <span class="value" id="tempLeftValue">72.0</span>
+          <span class="label">°F</span>
+        </div>
+        <div class="switch"><span>↔</span></div>
+        <div class="unit right">
+          <span class="value" id="tempRightValue">22.2</span>
+          <span class="label">°C</span>
+        </div>
+      </div>
+      
+      <div class="converter" id="distConverter">
+        <div class="unit left">
+          <span class="value" id="distLeftValue">123.0</span>
+          <span class="label">mi</span>
+        </div>
+        <div class="switch"><span>↔</span></div>
+        <div class="unit right">
+          <span class="value" id="distRightValue">197.5</span>
+          <span class="label">km</span>
+        </div>
+      </div>
     </div>
-    <div class="switch">
-      <span>↔</span>
-    </div>
-    <div class="unit right" id="rightContainer">
-      <span class="value" id="rightValue">22.2</span>
-      <span class="label">°C</span>
-    </div>
-  </div>
-
   <!-- Your script goes at the bottom so the DOM is loaded first -->
   <script src="script.js"></script>
 </body>

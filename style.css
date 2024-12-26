@@ -10,6 +10,12 @@ body {
   background-color: #f0f0f0; /* light gray for contrast */
 }
 
+.parent {
+  display: flex;
+  flex-direction: column;  /* stack children vertically */
+  align-items: center;     /* optional: center them horizontally */
+  width: 100%;
+}
 /* Container for the converter */
 .converter {
   display: flex;
@@ -17,7 +23,19 @@ body {
   align-items: center;
   background-color: #ffffff;
   padding: 20px;
+  justify-content: space-between; /* optional, if you want spacing inside */
+  
+  width: 90%;       /* Fill up to 90% of parent, for responsiveness */
+  max-width: 400px; /* The key: limits how wide each converter can get */
+  
+  margin: 5px 0;   /* Space between converters */
   border-radius: 12px;
+  cursor: grab; /* Show a “grab” cursor on hover */
+  touch-action: none; /* Disables browser’s default touch behavior on this element */
+}
+
+.converter:active {
+  cursor: grabbing;
 }
 
 /* Each “unit” is a flex column */
@@ -26,14 +44,9 @@ body {
   flex-direction: column;
   align-items: center;
   margin: 0 10px;
-  cursor: grab; /* Show a “grab” cursor on hover */
-  touch-action: none; /* Disables browser’s default touch behavior on this element */
 }
 
 /* When pointerdown, you can show a “grabbing” cursor */
-.unit:active {
-  cursor: grabbing;
-}
 
 /* The numeric value, make it larger */
 .value {
