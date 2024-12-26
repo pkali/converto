@@ -1,39 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Converto</title>
-  <!-- Link to your CSS -->
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-    <div class="parent">
-    <div class="converter" id="tempConverter">
-        <div class="unit left">
-          <span class="value" id="tempLeftValue">72.0</span>
-          <span class="label">°F</span>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Converto</title>
+        <!-- Link to your CSS -->
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="parent">
+            <div class="converter" id="tempConverter">
+                <div class="unit left">
+                    <span class="value" id="tempLeftValue">72.0</span>
+                    <span class="label">°F</span>
+                </div>
+                <div class="switch"><span>↔</span></div>
+                <div class="unit right">
+                    <span class="value" id="tempRightValue">22.2</span>
+                    <span class="label">°C</span>
+                </div>
+            </div>
+
+            <div class="converter" id="distConverter">
+                <div class="unit left">
+                    <span class="value" id="distLeftValue">123.0</span>
+                    <span class="label">mi</span>
+                </div>
+                <div class="switch"><span>↔</span></div>
+                <div class="unit right">
+                    <span class="value" id="distRightValue">197.5</span>
+                    <span class="label">km</span>
+                </div>
+            </div>
+
+            <div class="converter" id="volConverter">
+                <div class="unit left">
+                    <span class="value" id="volLeftValue">1</span>
+                    <span class="label">gal</span>
+                </div>
+                <div class="switch"><span>↔</span></div>
+                <div class="unit right">
+                    <span class="value" id="volRightValue">3.8</span>
+                    <span class="label">liters</span>
+                </div>
+            </div>
+
+            <div class="converter" id="areaConverter">
+                <div class="unit left">
+                  <span class="value" id="areaLeftValue">1</span>
+                  <span class="label">acres</span>
+                </div>
+                <div class="switch">
+                  <span>↔</span>
+                </div>
+                <div class="unit right">
+                  <span class="value" id="areaRightValue">0.4047</span>
+                  <span class="label">ha</span>
+                </div>
+              </div>
+
+              <div class="converter" id="fieldConverter">
+                <div class="unit left">
+                  <span class="value" id="fieldLeftValue">1</span>
+                  <span class="label">football fields</span>
+                </div>
+                <div class="switch">
+                  <span>↔</span>
+                </div>
+                <div class="unit right">
+                  <span class="value" id="fieldRightValue">0.4047</span>
+                  <span class="label">acres</span>
+                </div>
+              </div>
+
         </div>
-        <div class="switch"><span>↔</span></div>
-        <div class="unit right">
-          <span class="value" id="tempRightValue">22.2</span>
-          <span class="label">°C</span>
-        </div>
-      </div>
-      
-      <div class="converter" id="distConverter">
-        <div class="unit left">
-          <span class="value" id="distLeftValue">123.0</span>
-          <span class="label">mi</span>
-        </div>
-        <div class="switch"><span>↔</span></div>
-        <div class="unit right">
-          <span class="value" id="distRightValue">197.5</span>
-          <span class="label">km</span>
-        </div>
-      </div>
-    </div>
-  <!-- Your script goes at the bottom so the DOM is loaded first -->
-  <script src="script.js"></script>
-</body>
+        <!-- Your script goes at the bottom so the DOM is loaded first -->
+        <script src="script.js"></script>
+    </body>
 </html>
