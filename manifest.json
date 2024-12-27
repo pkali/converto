@@ -5,12 +5,12 @@
     "background_color": "#fa99ca",
     "display": "standalone",
     "scope": "/converto/",
-    "start_url": "https://5oft.duckdns.org/converto/",
+    "start_url": "/converto/index.html",
     "description": "Helper for expats in the US",
     "orientation": "portrait",
     "icons": [
         {
-            "src": "https://5oft.duckdns.org/converto/converto.png",
+            "src": "/converto/converto.png",
             "sizes": "512x512"
         }
     ]

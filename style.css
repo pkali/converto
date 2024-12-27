@@ -6,15 +6,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1e1d1d; /* light gray for contrast */
+  background-color: #1e1d1d;
+  /* light gray for contrast */
 }
 
 .parent {
   display: flex;
-  flex-direction: column;  /* stack children vertically */
-  align-items: center;     /* optional: center them horizontally */
+  flex-direction: column;
+  /* stack children vertically */
+  align-items: center;
+  /* optional: center them horizontally */
   width: 100%;
 }
+
 /* Container for the converter */
 .converter {
   display: flex;
@@ -22,15 +26,21 @@ body {
   align-items: center;
   background-color: #ffffff;
   padding: 20px;
-  justify-content: space-between; /* optional, if you want spacing inside */
-  
-  width: 90%;       /* Fill up to 90% of parent, for responsiveness */
-  max-width: 400px; /* The key: limits how wide each converter can get */
-  
-  margin: 5px 0;   /* Space between converters */
+  justify-content: space-between;
+  /* optional, if you want spacing inside */
+
+  width: 90%;
+  /* Fill up to 90% of parent, for responsiveness */
+  max-width: 400px;
+  /* The key: limits how wide each converter can get */
+
+  margin: 5px 0;
+  /* Space between converters */
   border-radius: 12px;
-  cursor: grab; /* Show a “grab” cursor on hover */
-  touch-action: pan-y; /* Disables browser’s default touch behavior on this element */
+  cursor: grab;
+  /* Show a “grab” cursor on hover */
+  touch-action: pan-y;
+  /* Disables browser’s default touch behavior on this element */
 }
 
 .converter:active {
