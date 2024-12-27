@@ -1,0 +1,17 @@
+{
+    "name": "Converto Imperial Metric ",
+    "short_name": "Converto",
+    "theme_color": "#ffcbe4",
+    "background_color": "#fa99ca",
+    "display": "standalone",
+    "scope": "/converto/",
+    "start_url": "https://5oft.duckdns.org/converto/",
+    "description": "Helper for expats in the US",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "https://5oft.duckdns.org/converto/converto.png",
+            "sizes": "512x512"
+        }
+    ]
+}
