@@ -262,6 +262,16 @@ const conversions = [
         maxValue: 100000
     },
     {
+        converterId: 'acreConverter',
+        leftLabel: 'acres',
+        rightLabel: 'hectares',
+        initialLeftValue: 400,
+        pxPerUnit: 10,
+        convertFn: (x) => x * 0.40468564224,
+        minValue: 0,
+        maxValue: 10000
+    },
+    {
         converterId: 'footballConverter',
         leftLabel: 'football fields',
         rightLabel: 'hectares',

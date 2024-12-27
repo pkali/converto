@@ -30,7 +30,7 @@ body {
   margin: 5px 0;   /* Space between converters */
   border-radius: 12px;
   cursor: grab; /* Show a “grab” cursor on hover */
-  touch-action: none; /* Disables browser’s default touch behavior on this element */
+  touch-action: pan-y; /* Disables browser’s default touch behavior on this element */
 }
 
 .converter:active {
