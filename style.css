@@ -6,8 +6,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #f0f0f0; /* light gray for contrast */
+  background-color: #1e1d1d; /* light gray for contrast */
 }
 
 .parent {
