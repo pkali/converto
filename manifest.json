@@ -1,0 +1,17 @@
+{
+    "name": "Converto Imperial Metric ",
+    "short_name": "Converto",
+    "theme_color": "#ffcbe4",
+    "background_color": "#fa99ca",
+    "display": "standalone",
+    "scope": "/converto/",
+    "start_url": "/converto/index.html",
+    "description": "Helper for expats in the US",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/converto/converto.png",
+            "sizes": "512x512"
+        }
+    ]
+}

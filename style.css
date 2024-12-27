@@ -1,0 +1,75 @@
+/* Make the body fill the screen and center content */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1e1d1d;
+  /* light gray for contrast */
+}
+
+.parent {
+  display: flex;
+  flex-direction: column;
+  /* stack children vertically */
+  align-items: center;
+  /* optional: center them horizontally */
+  width: 100%;
+}
+
+/* Container for the converter */
+.converter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px;
+  justify-content: space-between;
+  /* optional, if you want spacing inside */
+
+  width: 90%;
+  /* Fill up to 90% of parent, for responsiveness */
+  max-width: 400px;
+  /* The key: limits how wide each converter can get */
+
+  margin: 5px 0;
+  /* Space between converters */
+  border-radius: 12px;
+  cursor: grab;
+  /* Show a “grab” cursor on hover */
+  touch-action: pan-y;
+  /* Disables browser’s default touch behavior on this element */
+}
+
+.converter:active {
+  cursor: grabbing;
+}
+
+/* Each “unit” is a flex column */
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
+/* When pointerdown, you can show a “grabbing” cursor */
+
+/* The numeric value, make it larger */
+.value {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* The label (°F, °C, etc.) */
+.label {
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+/* The switch arrow in the center */
+.switch span {
+  font-size: 2rem;
+}
