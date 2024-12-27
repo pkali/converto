@@ -16,7 +16,7 @@
     </div>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/converto/service_worker.js');
+            navigator.serviceWorker.register('/converto/service_worker.js', { scope: '/converto/' });
         }
     </script>
 </body>
