@@ -1,6 +1,6 @@
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open("converto-v1").then((cache) => {
+        caches.open("converto-v2").then((cache) => {
             return cache.addAll([
                 "/converto/",
                 "/converto/index.html",
@@ -10,6 +10,18 @@ self.addEventListener("install", (event) => {
                 "/converto/converto.png",
                 "/converto/offline.html"
             ]);
+        })
+    );
+});
+
+self.addEventListener("activate", (event) => {
+    event.waitUntil(
+        caches.keys().then((keys) => {
+            return Promise.all(keys.map((key) => {
+                if (key.startsWith("converto-") && key !== "converto-v2") {
+                    return caches.delete(key);
+                }
+            }));
         })
     );
 });
