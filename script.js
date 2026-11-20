@@ -9,6 +9,8 @@
  *   convertFn : function (converts leftValue to rightValue)
  *   minValue : minimum displayed left value
  *   maxValue : maximum displayed left value
+ *   leftDisplayFn : function (optional, custom text for the left value)
+ *   snapStep : number (optional, snaps dragged left values to multiples of this)
  */
 function setupConverter(opts) {
     const container = document.getElementById(opts.containerId);
@@ -18,13 +20,14 @@ function setupConverter(opts) {
     // If a min or max is not provided, fall back to something sensible
     const minValue = (typeof opts.minValue === 'number') ? opts.minValue : -Infinity;
     const maxValue = (typeof opts.maxValue === 'number') ? opts.maxValue : +Infinity;
+    const formatLeft = (typeof opts.leftDisplayFn === 'function') ? opts.leftDisplayFn : (x) => x.toFixed(1);
 
     let currentLeftValue = opts.initialLeftValue;
     let startX = 0;
     let startLeftValue = currentLeftValue;
 
     // Initialize display
-    leftEl.textContent = currentLeftValue.toFixed(1);
+    leftEl.textContent = formatLeft(currentLeftValue);
     rightEl.textContent = opts.convertFn(currentLeftValue).toFixed(1);
 
     container.addEventListener('pointerdown', (event) => {
@@ -41,12 +44,17 @@ function setupConverter(opts) {
         const deltaX = event.clientX - startX;
         let newLeftValue = startLeftValue + (deltaX / opts.pxPerUnit);
 
+        // Snap to a grid, if requested
+        if (typeof opts.snapStep === 'number') {
+            newLeftValue = Math.round(newLeftValue / opts.snapStep) * opts.snapStep;
+        }
+
         // **Clamp** newLeftValue:
         newLeftValue = Math.max(minValue, Math.min(maxValue, newLeftValue));
         currentLeftValue = newLeftValue;
 
         // Update display
-        leftEl.textContent = currentLeftValue.toFixed(1);
+        leftEl.textContent = formatLeft(currentLeftValue);
         rightEl.textContent = opts.convertFn(currentLeftValue).toFixed(1);
     });
 
@@ -57,7 +65,7 @@ function setupConverter(opts) {
         // currentLeftValue = Math.round(currentLeftValue); // for example
         // currentLeftValue = Math.max(minValue, Math.min(maxValue, currentLeftValue));
 
-        leftEl.textContent = currentLeftValue.toFixed(1);
+        leftEl.textContent = formatLeft(currentLeftValue);
         rightEl.textContent = opts.convertFn(currentLeftValue).toFixed(1);
     });
 }
@@ -146,7 +154,9 @@ function addConverter(opts) {
         pxPerUnit: opts.pxPerUnit,
         convertFn: opts.convertFn,
         minValue: opts.minValue,
-        maxValue: opts.maxValue
+        maxValue: opts.maxValue,
+        leftDisplayFn: opts.leftDisplayFn,
+        snapStep: opts.snapStep
     });
 }
 
@@ -220,6 +230,23 @@ const conversions = [
         convertFn: (x) => x * 2.54,
         minValue: 0,
         maxValue: 100000
+    },
+    {
+        converterId: 'ftinConverter',
+        leftLabel: 'feet+inches (ft+in)',
+        rightLabel: 'cm',
+        initialLeftValue: 70,
+        pxPerUnit: 5,
+        convertFn: (x) => x * 2.54,
+        minValue: 0,
+        maxValue: 100000,
+        leftDisplayFn: (x) => {
+            const total = Math.round(x);
+            const feet = Math.floor(total / 12);
+            const inches = total % 12;
+            return `${feet}'${inches}"`;
+        },
+        snapStep: 1
     },
     {
         converterId: 'sqftConverter',
