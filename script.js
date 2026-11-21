@@ -25,6 +25,8 @@ function setupConverter(opts) {
     let currentLeftValue = opts.initialLeftValue;
     let startX = 0;
     let startLeftValue = currentLeftValue;
+    let pointerActive = false;
+    let activePointerId = null;
 
     // Initialize display
     leftEl.textContent = formatLeft(currentLeftValue);
@@ -32,13 +34,23 @@ function setupConverter(opts) {
 
     container.addEventListener('pointerdown', (event) => {
         event.preventDefault();
+        if (pointerActive) return; // ignore additional pointers during a drag
+        pointerActive = true;
+        activePointerId = event.pointerId;
         startX = event.clientX;
         startLeftValue = currentLeftValue;
-        container.setPointerCapture(event.pointerId);
+        // Safari on iOS (Webkit bug 236382) does not report pressure on touch
+        // pointermove events, so we rely on the down/up/cancel lifecycle here
+        // instead of checking event.pressure.
+        try {
+            container.setPointerCapture(event.pointerId);
+        } catch (e) {
+            // Ignore: some browsers can throw for non-primary pointers
+        }
     });
 
     container.addEventListener('pointermove', (event) => {
-        if (event.pressure === 0) return;
+        if (!pointerActive || event.pointerId !== activePointerId) return;
         event.preventDefault();
 
         const deltaX = event.clientX - startX;
@@ -58,8 +70,15 @@ function setupConverter(opts) {
         rightEl.textContent = opts.convertFn(currentLeftValue).toFixed(1);
     });
 
-    container.addEventListener('pointerup', (event) => {
-        container.releasePointerCapture(event.pointerId);
+    const endDrag = (event) => {
+        if (!pointerActive || event.pointerId !== activePointerId) return;
+        pointerActive = false;
+        activePointerId = null;
+        try {
+            container.releasePointerCapture(event.pointerId);
+        } catch (e) {
+            // Ignore: capture may already be released
+        }
 
         // If you also do snapping, apply it after the clamp:
         // currentLeftValue = Math.round(currentLeftValue); // for example
@@ -67,7 +86,10 @@ function setupConverter(opts) {
 
         leftEl.textContent = formatLeft(currentLeftValue);
         rightEl.textContent = opts.convertFn(currentLeftValue).toFixed(1);
-    });
+    };
+
+    container.addEventListener('pointerup', endDrag);
+    container.addEventListener('pointercancel', endDrag);
 }
 
 /**

@@ -1,6 +1,6 @@
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open("converto-v2").then((cache) => {
+        caches.open("converto-v3").then((cache) => {
             return cache.addAll([
                 "/converto/",
                 "/converto/index.html",
@@ -18,7 +18,7 @@ self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then((keys) => {
             return Promise.all(keys.map((key) => {
-                if (key.startsWith("converto-") && key !== "converto-v2") {
+                if (key.startsWith("converto-") && key !== "converto-v3") {
                     return caches.delete(key);
                 }
             }));
